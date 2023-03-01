@@ -12,7 +12,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('Главное') }}</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('news.category', $news->categories()->first()->slug) }}">{{ $news->categories()->first()->name }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('news.category', $news->categories->first()->slug) }}">{{ $news->categories->first()->name }}</a></li>
                     </ol>
                 </nav>
             </div>
