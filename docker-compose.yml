@@ -1,0 +1,89 @@
+version: "3"
+services:
+
+    #PHP Service
+    app:
+        build:
+            args:
+                user: 1000
+                uid: 1000
+            context: .
+            dockerfile: docker/php/Dockerfile
+        image: ${APP_ID}_app
+        container_name: ${APP_ID}_app
+        restart: unless-stopped
+        tty: true
+        volumes:
+            - ./:/var/www
+            - ./docker/php/conf.d/php.ini:/usr/local/etc/php/conf.d/local.ini
+            - ./docker/php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+#            - ./docker/php/logs/error.log:/var/log/fpm-php.www.log
+#            - ./docker/php/logs/xdebug.log:/tmp/xdebug.log
+        environment:
+            PHP_IDE_CONFIG: "serverName=localhost"
+        depends_on:
+            - db
+        networks:
+            - network
+
+    #Nginx Service
+    webserver:
+        image: nginx:latest
+        container_name: ${APP_ID}_webserver
+        restart: unless-stopped
+        tty: true
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+#            - ./docker/nginx/logs/error.log:/var/log/nginx/error.log
+#            - ./docker/nginx/logs/access.log:/var/log/nginx/access.log
+        ports:
+            - 80:80
+            - 443:443
+        depends_on:
+            - app
+        networks:
+            - network
+
+    #Node Service
+    node:
+        image: node:latest
+        container_name: ${APP_ID}_node
+        restart: unless-stopped
+        tty: true
+        volumes:
+            - ./:/var/www
+        working_dir: /var/www
+        networks:
+            - network
+
+    #MySQL Service
+    db:
+        image: mysql:latest
+        container_name: ${APP_ID}_db
+        restart: unless-stopped
+        tty: true
+        command: --default-authentication-plugin=mysql_native_password
+        volumes:
+            - dbdata:/var/lib/mysql
+            - ./docker/mysql/conf.d/:/etc/mysql/conf.d/
+#            - ./docker/mysql/logs/general.log:/var/log/mysql/general.log
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_USERNAME}
+        ports:
+            - 3306:3306
+        networks:
+            - network
+
+#Docker Volumes
+volumes:
+    dbdata:
+        driver: local
+
+#Docker Networks
+networks:
+    network:
+        driver: bridge

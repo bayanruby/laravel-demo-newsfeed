@@ -1,3 +1,8 @@
+/docker/php/logs/error.log
+/docker/php/logs/xdebug.log
+/docker/nginx/logs/access.log
+/docker/nginx/logs/error.log
+/docker/mysql/logs/general.log
 /.phpunit.cache
 /node_modules
 /public/build
