@@ -38,7 +38,7 @@ services:
 #            - ./docker/nginx/logs/error.log:/var/log/nginx/error.log
 #            - ./docker/nginx/logs/access.log:/var/log/nginx/access.log
         ports:
-            - 80:80
+            - 8000:80
             - 443:443
         depends_on:
             - app
