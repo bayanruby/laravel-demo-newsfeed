@@ -10,7 +10,7 @@ class Article extends Model
 {
     use HasFactory;
 
-    protected $perPage = 6;
+    protected $perPage = 5;
 
     protected $fillable = [
         'title',

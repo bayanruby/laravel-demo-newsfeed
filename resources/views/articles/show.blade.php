@@ -34,3 +34,14 @@
         </div>
 
 @endsection('content')
+
+
+@push('js')
+
+    <script type="module">
+        $(document).ready(function(){
+            $("header nav a[href='{{ route('categories.articles', $article->categories->first()->slug) }}']").addClass('active')
+        });
+    </script>
+
+@endpush

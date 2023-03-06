@@ -15,7 +15,7 @@ class ArticleController extends Controller
 {
     public function index(): View
     {
-        $articles = Article::query()->orderByDesc('created_at')->has('categories')->paginate();
+        $articles = Article::query()->orderByDesc('created_at')->withWhereHas('categories')->paginate();
 
         $categories = Category::query()->orderByDesc('is_active')->get();
 
@@ -36,8 +36,9 @@ class ArticleController extends Controller
             $article->title = $request->input('title');
             $article->description = $request->input('description');
             $article->content = $request->input('content');
-            $article->categories()->sync($request->input('category'));
             $article->save();
+
+            $article->categories()->sync($request->input('category'));
         });
 
         return to_route('admin.articles.index')->with('status', __('Новость успешно добавлена'));
@@ -60,8 +61,9 @@ class ArticleController extends Controller
             $article->title = $request->input('title');
             $article->description = $request->input('description');
             $article->content = $request->input('content');
-            $article->categories()->sync($request->input('category'));
             $article->update();
+
+            $article->categories()->sync($request->input('category'));
         });
 
         return to_route('admin.articles.edit', $article)->with('status', __('Новость успешно обновлена'));

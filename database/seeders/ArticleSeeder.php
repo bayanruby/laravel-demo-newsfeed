@@ -10,7 +10,7 @@ class ArticleSeeder extends Seeder
 {
     public function run(): void
     {
-        $categories = Category::all();
+        $categories = Category::query()->get();
 
         Article::factory()->count(250)->create()->each(function ($article) use ($categories) {
             $article->categories()->sync($categories->random(1));

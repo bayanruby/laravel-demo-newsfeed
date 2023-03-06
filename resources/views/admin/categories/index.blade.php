@@ -14,20 +14,26 @@
         <div class="col-md-3 themed-grid-col"></div>
     </div>
 
+    <div class="row mb-2">
+        <div class="col-md-3 themed-grid-col"></div>
+        <div class="col-md-6 themed-grid-col text-le">
+            @if(session('status'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+            @endif
+        </div>
+        <div class="col-md-3 themed-grid-col"></div>
+    </div>
+
     @foreach($categories as $k => $category)
         <div class="row mb-3 @if(! $category->is_active) opacity-50 @endif">
             <div class="col-md-3 themed-grid-col"></div>
             <div class="col-md-6 themed-grid-col text-le">
-                @if(session('status') && !$k)
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                @endif
                 <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                     <div class="col p-4 d-flex flex-column position-static">
                         <h3 class="mb-0">{{ $category->name }}</h3>
                         <div class="mb-1 text-muted">{{ route('categories.articles', $category->slug, false) }}</div>
-
                         @if($category->is_active)
                             <form class="mt-4" action="{{ route('admin.categories.archive', $category->id) }}" method="POST">
                                 @csrf

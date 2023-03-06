@@ -22,9 +22,9 @@
 
             <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
                 <a class="me-3 py-2 text-dark text-decoration-none {{ active_route(['home']) }}" href="{{ route('home') }}">{{ __('Главное') }}</a>
-                @foreach($categories as $id => $category)
-                    @if ($id > 5) @continue @endif
-                    <a class="me-3 py-2 text-dark text-decoration-none {{ active_url(route('categories.articles', $category->slug)) }}" href="{{ route('categories.articles', $category->slug) }}">{{ __($category->name) }}</a>
+                @foreach($categories as $k => $category)
+                    @if ($k > 5) @continue @endif
+                    <a class="me-3 py-2 text-dark text-decoration-none {{ active_url(route('categories.articles', $category->slug)) }}" href="{{ route('categories.articles', $category->slug) }}">{{ $category->name }}</a>
                 @endforeach
             </nav>
         </div>

@@ -3,7 +3,7 @@
 @isset($currentCategory)
     @section('title', $currentCategory->name)
 @else
-    @section('title', 'Новостная лента')
+    @section('title', __('Новостная лента'))
 @endisset
 
 @section('content')
@@ -19,7 +19,7 @@
             <div class="row mb-3">
                 <div class="col-md-3 themed-grid-col"></div>
                 <div class="col-md-6 themed-grid-col text-le">
-                    <select class="form-select mb-4 categories" aria-label="Default select example">
+                    <select class="form-select mb-4 categories">
                         <option value="0">
                             @isset($currentCategory)
                                 {{ __('Все разделы') }}

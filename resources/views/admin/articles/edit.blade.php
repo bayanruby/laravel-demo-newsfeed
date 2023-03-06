@@ -29,7 +29,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="category" class="form-label fw-bold">{{ __('Категория') }}</label>
-                        <select name="category" class="form-select mb-4 @error('category') is-invalid @enderror" aria-label="Default select example">
+                        <select name="category" class="form-select mb-1 @error('category') is-invalid @enderror" aria-label="Default select example">
                             <label for="category" class="form-label fw-bold">{{ __('Категория') }}</label>
                             @if(!$article->categories->first()->is_active)
                                 <option selected value="{{ $article->categories->first()->id }}">

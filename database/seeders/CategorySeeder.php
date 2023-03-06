@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class CategorySeeder extends Seeder
 {
@@ -25,13 +24,13 @@ class CategorySeeder extends Seeder
             'Из жизни',
         ];
 
-        $randomCategories = array_rand(array_flip($categories), rand(4, 11));
+        $randomCategories = array_rand(array_flip($categories), rand(5, 12));
 
         foreach ($randomCategories as $category) {
-            Category::create([
-                'name' => $category,
-                'slug' => Str::slug($category, '-')
-            ]);
+            $model = new Category();
+            $model->name = $category;
+            $model->slug = $category;
+            $model->save();
         }
     }
 }

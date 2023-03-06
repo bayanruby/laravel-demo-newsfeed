@@ -1,0 +1,5 @@
+/php/logs/error.log
+/php/logs/xdebug.log
+/nginx/logs/access.log
+/nginx/logs/error.log
+/mysql/logs/general.log
