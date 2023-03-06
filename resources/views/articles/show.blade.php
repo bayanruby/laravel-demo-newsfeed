@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $news->title)
+@section('title', $article->title)
 
 @section('content')
 
@@ -12,7 +12,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('Главное') }}</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('news.category', $news->categories->first()->slug) }}">{{ $news->categories->first()->name }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('categories.articles', $article->categories->first()->slug) }}">{{ $article->categories->first()->name }}</a></li>
                     </ol>
                 </nav>
             </div>
@@ -24,9 +24,9 @@
             <div class="col-md-6 themed-grid-col text-le">
                 <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                     <div class="col p-4 d-flex flex-column position-static">
-                        <h3 class="mb-0">{{ $news->title }}</h3>
-                        <div class="mb-1 text-muted">{{ $news->created_at->diffForHumans() }}</div>
-                        <p class="card-text mb-auto" style="white-space: pre-line;">{{ $news->content }}</p>
+                        <h3 class="mb-0">{{ $article->title }}</h3>
+                        <div class="mb-1 text-muted">{{ $article->created_at->diffForHumans() }}</div>
+                        <p class="card-text mb-auto" style="white-space: pre-line;">{{ $article->content }}</p>
                     </div>
                 </div>
             </div>

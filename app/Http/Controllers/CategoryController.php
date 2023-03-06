@@ -3,21 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\News;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Illuminate\Http\Request;
+use App\Models\Article;
+use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
-    public function show($slug)
+    public function articles(string $slug): View
     {
-        $newsList = News::orderByDesc('created_at')->withWhereHas('categories', function (BelongsToMany|EloquentBuilder $query) use ($slug) {
-            $query->where('slug', $slug);
-        })->paginate(News::PAGINATION_COUNT);
+        $currentCategory = Category::query()->where('slug', $slug)->active()->has('articles')->firstOrFail();
 
-        $categories = Category::all();
+        $articles = Article::query()->orderByDesc('created_at')->withWhereHas('categories', function (Builder $query) use ($slug) {
+            $query->where('slug', $slug)->active();
+        })->paginate();
 
-        return view('news.category', compact('newsList', 'categories', 'slug'));
+        $categories = Category::query()->active()->has('articles')->get();
+
+        return view('articles.index', compact('articles', 'currentCategory', 'categories'));
     }
 }

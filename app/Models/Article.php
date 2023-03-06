@@ -2,22 +2,25 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class News extends Model
+class Article extends Model
 {
     use HasFactory;
 
-    public const PAGINATION_COUNT = 6;
+    protected $perPage = 6;
 
     protected $fillable = [
         'title',
         'description',
-        'content'
+        'content',
+        'is_active'
     ];
 
-    public function categories() {
+    public function categories()
+    {
         return $this->belongsToMany(Category::class);
     }
 }
