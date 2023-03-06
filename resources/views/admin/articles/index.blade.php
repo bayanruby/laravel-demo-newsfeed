@@ -55,9 +55,12 @@
                             <div class="mb-1 text-muted">{{ $article->created_at->diffForHumans() }}</div>
                             <p class="card-text mb-auto">{{ $article->description }}</p>
 
-                            <form class="mt-4">
+                            <form class="mt-4" action="{{ route('admin.articles.destroy', $article->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+
                                 <a class="btn btn-outline-primary" href="{{ route('admin.articles.edit', $article->id) }}" role="button">{{ __('Редактировать') }}</a>
-                                <button type="button" class="btn btn-link link-danger">{{ __('Удалить') }}</button>
+                                <button type="submit" class="btn btn-link link-danger">{{ __('Удалить') }}</button>
                             </form>
                         </div>
                     </div>
@@ -84,6 +87,13 @@
                     location.replace('{{ route('admin.categories.articles', '') }}/' + $(this).val())
                 }
             });
+
+            $('form .link-danger').on('click', function (){
+                var result = confirm("{{ __('Удалить новость?') }}");
+                if (!result) {
+                    return false;
+                }
+            })
         });
     </script>
 

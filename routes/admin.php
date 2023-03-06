@@ -21,6 +21,7 @@ $router->controller(CategoryController::class)->group(function () use ($router) 
     $router->post('/categories', 'store')->name('categories.store');
     $router->get('/categories/{category}/edit', 'edit')->name('categories.edit');
     $router->put('/categories/{category}', 'update')->name('categories.update');
-    $router->delete('/categories/{category}', 'destroy')->name('categories.destroy');
+    $router->patch('/categories/{category}/archive', 'archive')->name('categories.archive');
+    $router->patch('/categories/{category}/unarchive', 'unarchive')->name('categories.unarchive');
     $router->get('/rubrics/{slug}', 'articles')->name('categories.articles');
 });

@@ -30,6 +30,18 @@ class Category extends Model
         $query->where('is_active', 1);
     }
 
+    public function archive()
+    {
+        $this->is_active = 0;
+        $this->save();
+    }
+
+    public function unarchive()
+    {
+        $this->is_active = 1;
+        $this->save();
+    }
+
     protected function slug(): Attribute
     {
         return Attribute::make(

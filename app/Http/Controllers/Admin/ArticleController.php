@@ -66,4 +66,12 @@ class ArticleController extends Controller
 
         return to_route('admin.articles.edit', $article)->with('status', __('Новость успешно обновлена'));
     }
+
+    public function destroy(int $article)
+    {
+        $article = Article::query()->findOrFail($article);
+        $article->delete();
+
+        return to_route('admin.articles.index')->with('status', __('Новость успешно удалена'));
+    }
 }

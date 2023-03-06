@@ -27,16 +27,28 @@
                     <div class="col p-4 d-flex flex-column position-static">
                         <h3 class="mb-0">{{ $category->name }}</h3>
                         <div class="mb-1 text-muted">{{ route('categories.articles', $category->slug, false) }}</div>
-                        <form class="mt-4">
-                            <a class="btn btn-outline-primary" href="{{ route('admin.categories.edit', $category->id) }}" role="button">{{ __('Редактировать') }}</a>
-                            <button type="button" class="btn btn-link link-danger">
-                                @if($category->is_active)
+
+                        @if($category->is_active)
+                            <form class="mt-4" action="{{ route('admin.categories.archive', $category->id) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+
+                                <a class="btn btn-outline-primary" href="{{ route('admin.categories.edit', $category->id) }}" role="button">{{ __('Редактировать') }}</a>
+                                <button type="submit" class="btn btn-link link-danger archive">
                                     {{ __('Скрыть') }}
-                                @else
-                                    {{ __('Активировать') }}
-                                @endif
-                            </button>
-                        </form>
+                                </button>
+                            </form>
+                        @else
+                            <form class="mt-4" action="{{ route('admin.categories.unarchive', $category->id) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+
+                                <a class="btn btn-outline-primary" href="{{ route('admin.categories.edit', $category->id) }}" role="button">{{ __('Редактировать') }}</a>
+                                <button type="submit" class="btn btn-link link-danger unarchive">
+                                    {{ __('Восстановить') }}
+                                </button>
+                            </form>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -45,3 +57,26 @@
     @endforeach
 
 @endsection
+
+
+@push('js')
+
+    <script type="module">
+        $(document).ready(function(){
+            $('form .link-danger.archive').on('click', function (){
+                var result = confirm("{{ __('Скрыть категорию?') }}");
+                if (!result) {
+                    return false;
+                }
+            })
+
+            $('form .link-danger.unarchive').on('click', function (){
+                var result = confirm("{{ __('Восстановить категорию?') }}");
+                if (!result) {
+                    return false;
+                }
+            })
+        });
+    </script>
+
+@endpush

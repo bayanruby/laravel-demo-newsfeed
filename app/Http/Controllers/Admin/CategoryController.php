@@ -15,7 +15,7 @@ class CategoryController extends Controller
 {
     public function index(): View
     {
-        $categories = Category::query()->orderByDesc('created_at')->orderByDesc('is_active')->paginate();
+        $categories = Category::query()->orderByDesc('is_active')->orderByDesc('created_at')->paginate();
 
         return view('admin.categories.index', compact('categories'));
     }
@@ -63,5 +63,21 @@ class CategoryController extends Controller
         $currentCategory = $categories->firstWhere('slug', $slug);
 
         return view('admin.articles.index', compact('articles', 'currentCategory', 'categories'));
+    }
+
+    public function archive(int $category)
+    {
+        $category = Category::query()->findOrFail($category);
+        $category->archive();
+
+        return to_route('admin.categories.index')->with('status', __('Категория успешно скрыта'));
+    }
+
+    public function unarchive(int $category)
+    {
+        $category = Category::query()->findOrFail($category);
+        $category->unarchive();
+
+        return to_route('admin.categories.index')->with('status', __('Категория успешно восстановлена'));
     }
 }

@@ -1,3 +1,18 @@
+# Демо версия проекта
+
+- Лента новостей - http://bayanrv9.beget.tech
+- Админ панель - http://bayanrv9.beget.tech/manager
+
+# Как запустить проект через Docker
+
+1. git clone
+2. cp .env.example .env
+3. прописать DB_PASSWORD в .env файле
+4. docker compose up -d
+5. docker exec newsfeed_app /bin/bash -c "composer install"
+6. docker exec newsfeed_node /bin/bash -c "npm install && npm run build"
+7. проект заработает по адресу http://localhost:8000
+
 # Техническое Задание
 
 Реализуйте на laravel простую новостную ленту с простым управлением содержимого.
